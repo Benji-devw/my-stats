@@ -1,8 +1,24 @@
 "use client"; // This is a client component 👈🏽
 import MatchList from '@/components/MatchList'
 import Image from 'next/image'
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [datas, setDatas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Set the request headers to indicate JSON format
+      },
+    })
+      .then((res) => res.json()) // Parse the response data as JSON
+      .then((data) => setDatas(data)); // Update the state with the fetched data
+  }, []);
+
+
+  console.log(datas);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-14">
       <div className="bg"></div>
@@ -32,7 +48,7 @@ export default function Home() {
 
       <div className="z-10 home__content flex flex-col gap-3 text-center">
         <h2>Liste des matchs</h2>
-        <MatchList />
+        {/* <MatchList matches={datas}/> */}
 
         {/* <Image
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
@@ -46,13 +62,21 @@ export default function Home() {
 
       <div className="z-10 mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-5 lg:text-left">
         <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href=""
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
-            TOM{' '}
+            {/* <img src="./assets/steph.jpg" alt="Steph" className="w-20 h-20 rounded-full" /> */}
+            <Image
+              src="/steph.jpg"
+              alt="Vercel Logo"
+              className="rounded-full"
+              width={100}
+              height={100}
+              priority
+            />
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
