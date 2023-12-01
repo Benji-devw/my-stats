@@ -1,6 +1,3 @@
-
-// PRAGMA foreign_keys = ON;
-
 import sqlite3 from "sqlite3";
 import { open, Database } from "sqlite";
 
@@ -9,6 +6,12 @@ let db = null;
 
 // Define the GET request handler function
 export async function GET(req, res) {
+  // Extract the "id" from the URL by splitting the URL and taking the last element
+  const id = req.url.split("/").pop();
+
+  // Log the extracted "id" to the console (for debugging purposes)
+  console.log(id);
+
   // Check if the database instance has been initialized
   if (!db) {
     // If the database instance is not initialized, open the database connection
@@ -18,12 +21,11 @@ export async function GET(req, res) {
     });
   }
 
-  // Perform a database query to retrieve all matches from the "matches" table
-  const matches = await db.all("SELECT * FROM matches");
-  const players = await db.all("SELECT * FROM players");
+  // Perform a database query to retrieve an item based on the id
+  const item = await db.get("SELECT * FROM matches WHERE match_id = ?", id);
 
-  // Return the matches and players as a JSON response with status 200
-  return new Response(JSON.stringify({ matches, players }), {
+  // Return the items as a JSON response with status 200
+  return new Response(JSON.stringify(item), {
     headers: { "Content-Type": "application/json" },
     status: 200,
   });
