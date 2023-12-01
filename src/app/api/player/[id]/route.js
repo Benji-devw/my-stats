@@ -22,7 +22,7 @@ export async function GET(req, res) {
   }
 
   // Perform a database query to retrieve an item based on the id
-  const item = await db.get("SELECT * FROM matches WHERE id = ?", id);
+  const item = await db.get("SELECT * FROM players WHERE player_id = ?", id);
 
   // Return the items as a JSON response with status 200
   return new Response(JSON.stringify(item), {
