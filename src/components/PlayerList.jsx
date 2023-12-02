@@ -10,6 +10,7 @@ const MatchList = ({ players }) => {
     <>
       {players.map((player) => (
         <a
+          key={player.player_id}
           href=""
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           // target="_blank"
@@ -20,7 +21,7 @@ const MatchList = ({ players }) => {
           >
             <Image
               src={player.media}
-              alt="Vercel Logo"
+              alt={player.name}
               className="rounded-full"
               width={100}
               height={100}
