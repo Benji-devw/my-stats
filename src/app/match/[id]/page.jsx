@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-'use client';
-import { useParams } from "next/navigation";
-
-const Test = () => {
-  const { id } = useParams();
-  return <div>Match {id}</div>;
-};
-
-export default Test;
-=======
 "use client";
 import React from 'react';
 import { useRouter } from 'next/navigation';
@@ -34,4 +23,3 @@ const MatchPage = () => {
 };
 
 export default MatchPage;
->>>>>>> 0df37857c6fbea88a071bea18c56fbd3511490b0
