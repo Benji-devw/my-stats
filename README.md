@@ -2,6 +2,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Create SQLite database:
+
+```bash
+node connect.js
+```
+
 First, run the development server:
 
 ```bash
