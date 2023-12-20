@@ -34,6 +34,13 @@ main {
   /* min-height: 100vh; */
 
 }
+
+th, td {
+  text-align: left;
+  padding: 1rem;
+  width: 100px;
+}
+
 .bg {
   content: "";
   backdrop-filter: blur(10px);
