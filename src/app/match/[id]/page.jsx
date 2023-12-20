@@ -6,12 +6,11 @@ import React, { useEffect, useState } from "react";
 
 const MatchPage = () => {
   const params = useParams();
-  const [datas, setDatas] = useState([]);
-  console.log(params);
-  console.log(datas);
+  const [match, setMatch] = useState([]);
+  const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/match/${params.id}`, {
+    fetch(`http://localhost:3000/api`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -23,19 +22,38 @@ const MatchPage = () => {
         }
         return res.json();
       })
-      .then((data) => setDatas(data))
+      //FIXME: find a way to get the match_id from the params.id
+      .then((data) => {
+        // console.log(typeof data);
+        const entriesArray = Object.entries(data);
+        console.log(entriesArray);
+        const match = entriesArray.find((match) => match[1].match_id === params.id);
+        setMatch(match[1]);
+      })
       .catch((error) => console.error("Fetch error:", error));
-  }, []);
+  }, [params.id]);
+  
 
+  // console.log(match);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-12">
-      <div className="bg"></div>
+    <>
       <div className="z-20">
         <h1>Match Details</h1>
-        {/* <p>Match ID: {id}</p> */}
-        {/* Display other match details */}
+        <p>Match ID: {params.id}</p>
+        <p>Match Date: {match.match_date}</p>
       </div>
-    </main>
+      
+      {/* <div className="z-20">
+        <h1>Players in this Match</h1>
+        {datas.player && datas.match && (
+          <div>
+            <p>Player ID: {datas.player.player_id}</p>
+            <p>Player Name: {datas.player.name}</p>
+            <p>Match ID: {datas.match.match_id}</p>
+          </div>
+        )}
+      </div> */}
+    </>
   );
 };
 
