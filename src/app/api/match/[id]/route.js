@@ -21,8 +21,13 @@ export async function GET(req, res) {
     });
   }
 
+  // FIXME: Complete the SQL query to retrieve an item based on the id
   // Perform a database query to retrieve an item based on the id
-  const item = await db.get("SELECT * FROM matches WHERE match_id = ?", id);
+  const item = await db.get(`
+  SELECT matches.* 
+  
+  FROM matches 
+  WHERE match_id = ?`, id);
 
   // Return the items as a JSON response with status 200
   return new Response(JSON.stringify(item), {

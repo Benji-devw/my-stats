@@ -33,18 +33,31 @@ db.serialize(() => {
     name TEXT,
     media TEXT,
     team TEXT,
-    matchs TEXT,
     comment_team TEXT,
     comment_player TEXT,
-    player_average REAL,
-    match_id INTEGER,
-    FOREIGN KEY (match_id) REFERENCES matches(match_id)
+    player_average REAL
   )`);
+
+  // Create the players_matches table associating players and matches
+  db.run(`
+    CREATE TABLE IF NOT EXISTS players_matches (
+      player_match_id INTEGER PRIMARY KEY,
+      goals INTEGER,
+      assists INTEGER,
+      shoots INTEGER,
+      average FLOAT,
+      player_id INTEGER,
+      match_id INTEGER,
+      coach_comment TEXT,
+      player_comment TEXT,
+      FOREIGN KEY (match_id) REFERENCES matches(match_id),
+      FOREIGN KEY (player_id) REFERENCES matches(player_id),
+      UNIQUE(player_id, match_id)
+    )`);
 
   // Insert matches data
   const matchesData = [
     {
-      match_id: 1,
       media_video: "link",
       team1_name: "equipe_a",
       team2_name: "equipe_b",
@@ -53,7 +66,6 @@ db.serialize(() => {
       match_average: "3.5",
     },
     {
-      match_id: 2,
       media_video: "link",
       team1_name: "equipe_a",
       team2_name: "equipe_b",
@@ -95,71 +107,51 @@ db.serialize(() => {
       name: "Steph",
       media: "/medias/steph.jpg",
       team: "equipe_a",
-      matchs: [
-        { match_id: 1, goals: 12, pass_d: 13, average: "3.5" },
-        { match_id: 2, goals: 6, pass_d: 3, average: "3.5" },
-      ],
       comment_team: ["comment 1", "comment 2"],
       comment_player: ["mon comment 1", "mon comment 2"],
-      player_average: "3.5",
+      player_average: 3.5,
     },
     {
       player_id: 2,
       name: "Pedro",
       media: "/medias/pedro.jpg",
       team: "equipe_a",
-      matchs: [
-        { match_id: 1, goals: 12, pass_d: 13, average: "3.5" },
-        { match_id: 2, goals: 6, pass_d: 3, average: "3.5" },
-      ],
       comment_team: ["comment 1", "comment 2"],
       comment_player: ["mon comment 1", "mon comment 2"],
-      player_average: "7.5",
+      player_average: 7.5,
     },
     {
       player_id: 3,
       name: "Tom",
       media: "/medias/tom.jpg",
       team: "equipe_a",
-      matchs: [
-        { match_id: 1, goals: 12, pass_d: 13, average: "3.5" },
-        { match_id: 2, goals: 6, pass_d: 3, average: "3.5" },
-      ],
       comment_team: ["comment 1", "comment 2"],
       comment_player: ["mon comment 1", "mon comment 2"],
-      player_average: "6.5",
+      player_average: 6.5,
     },
     {
       player_id: 4,
       name: "Quentin",
       media: "/medias/quentin.jpg",
       team: "equipe_a",
-      matchs: [
-        { match_id: 1, goals: 12, pass_d: 13, average: "3.5" },
-        { match_id: 2, goals: 6, pass_d: 3, average: "3.5" },
-      ],
       comment_team: ["comment 1", "comment 2"],
       comment_player: ["mon comment 1", "mon comment 2"],
-      player_average: "8",
+      player_average: 8,
     },
     {
-      player_id: 4,
+      player_id: 5,
       name: "Ben",
       media: "/medias/ben.jpg",
       team: "equipe_a",
-      matchs: [
-        { match_id: 1, goals: 12, pass_d: 13, average: "3.5" },
-        { match_id: 2, goals: 6, pass_d: 3, average: "3.5" },
-      ],
       comment_team: ["comment 1", "comment 2"],
       comment_player: ["mon comment 1", "mon comment 2"],
-      player_average: "4",
+      player_average: 4,
     },
   ];
 
   const insertPlayerSql = `
-  INSERT INTO players(name, media, team, matchs, comment_team, comment_player, player_average, match_id)
-  VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+  INSERT INTO players(name, media, team, comment_team, comment_player, player_average)
+  VALUES(?, ?, ?, ?, ?, ?)
 `;
 
   playersData.forEach((player) => {
@@ -169,11 +161,9 @@ db.serialize(() => {
         player.name,
         player.media,
         player.team,
-        JSON.stringify(player.matchs),
         JSON.stringify(player.comment_team),
         JSON.stringify(player.comment_player),
         player.player_average,
-        // match_id,
       ],
       function (err) {
         if (err) {
@@ -184,6 +174,76 @@ db.serialize(() => {
       }
     );
   });
+
+  const playes_matches = [
+    {
+      goals: 3,
+      assists: 1,
+      shoots: 10,
+      average: 3.5,
+      player_id: 1,
+      match_id: 1,
+    },
+    {
+      goals: 3,
+      assists: 1,
+      shoots: 10,
+      average: 3.5,
+      player_id: 2,
+      match_id: 1,
+    },
+    {
+      goals: 3,
+      assists: 1,
+      shoots: 10,
+      average: 3.5,
+      player_id: 3,
+      match_id: 1,
+    },
+    {
+      goals: 3,
+      assists: 1,
+      shoots: 10,
+      average: 3.5,
+      player_id: 4,
+      match_id: 1,
+    },
+    {
+      goals: 3,
+      assists: 1,
+      shoots: 10,
+      average: 3.5,
+      player_id: 5,
+      match_id: 1,
+    },
+  ];
+
+  const insertPlayerMatchSql = `
+  INSERT INTO players_matches(goals, assists, shoots, average, player_id, match_id)
+  VALUES(?, ?, ?, ?, ?, ?)
+`;
+
+  playes_matches.forEach((player_match) => {
+    db.run(
+      insertPlayerMatchSql,
+      [
+        player_match.goals,
+        player_match.assists,
+        player_match.shoots,
+        player_match.average,
+        player_match.player_id,
+        player_match.match_id,
+      ],
+      function (err) {
+        if (err) {
+          return console.error(err.message);
+        }
+        const playerMatchId = this.lastID; // obtenir l'ID du dernier joueur inséré
+        console.log(`Player Match inserted, ID ${playerMatchId}`);
+      }
+    );
+  });
+
 
   // Close the database connection after all insertions are done
   db.close((err) => {

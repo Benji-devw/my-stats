@@ -36,7 +36,7 @@ const MatchPage = () => {
     <>
       <CardMatch match={match} params={params} />
 
-      <div className="z-20">
+      <div className="z-20 p-2 mb-4">
         {/* <h1>Players in this Match</h1> */}
         <StatsTable players={players} params={params} />
       </div>
