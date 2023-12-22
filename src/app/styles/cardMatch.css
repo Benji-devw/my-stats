@@ -1,0 +1,18 @@
+
+
+.card-match {
+  margin: 1rem;
+  text-align: center;
+  width: 100%;
+  padding: 10px; 
+  border-bottom: 1px solid rgb(194 65 12);;
+  box-shadow: 0 15px 25px rgba(129, 124, 124, 0.2); 
+  border-radius: 5px; 
+  backdrop-filter: blur(14px); 
+  background-color: rgba(0, 0, 0, 0.5); 
+  
+}
+
+.matches__list .card img { 
+  height: 60%; 
+}

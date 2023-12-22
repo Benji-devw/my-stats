@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./styles/globals.css";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,9 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center justify-between p-12">
+        <main className="flex min-h-screen flex-col items-center justify-around p-12">
           <div className="bg"></div>
-          <div className="z-20 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+          <div className="z-30 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
             <p className="fixed left-0 top-0 flex w-full justify-center border-b bg-gradient-to-b pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:p-4 lg:dark:bg-zinc-800/30">
               <code className="font-mono font-bold">My Stats</code>
             </p>
@@ -26,14 +27,6 @@ export default function RootLayout({ children }) {
                 rel="noopener noreferrer"
               >
                 Mise à jour le 28/11/2023
-                {/* <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            /> */}
               </a>
             </div>
           </div>

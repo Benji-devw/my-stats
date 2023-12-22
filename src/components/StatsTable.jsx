@@ -1,10 +1,8 @@
 import Image from "next/image";
 import React from "react";
-import { Table } from "@nextui-org/react";
+import "@/app/styles/statsTable.css";
 
 const StatsTable = ({ players, params }) => {
-
-  //FIXME: td in td + alignement
   return (
     <table>
       <thead>
@@ -31,12 +29,12 @@ const StatsTable = ({ players, params }) => {
             </td>
             {JSON.parse(stat.matchs).map((match, id) =>
               match.match_id == params.id && (
-                <tr key={id}>
+                <React.Fragment key={id}>
                   <td>{match.goals}</td>
                   <td>{match.shoot}</td>
                   <td>{match.pass_d}</td>
                   <td>{match.average}/10</td>
-                </tr>
+                </React.Fragment>
               )
             )}
           </tr>

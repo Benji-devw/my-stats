@@ -1,0 +1,13 @@
+table {
+  text-align: center;
+}
+th {
+  padding: .4rem;
+  /* margin: .2rem; */
+  /* width: 30px; */
+  border-top : 1px solid #fff;
+}
+td {
+  padding: .4rem;
+  border-top : 1px solid #fff;
+}
