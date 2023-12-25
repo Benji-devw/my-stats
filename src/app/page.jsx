@@ -2,14 +2,13 @@
 "use client"; // This is a client component 👈🏽
 import MatchList from "@/components/MatchList";
 import PlayerList from "@/components/PlayerList";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [datas, setDatas] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api", {
+    fetch(`http://localhost:3000/api`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +28,8 @@ export default function Home() {
   return (
     <>
       <div className="home__content pt-6 z-10 flex flex-col gap-3 text-center">
-        <h2 className="text-2xl">Liste des matchs</h2>
+        <h1 h1 className="text-3xl">Liste des matchs</h1>
+
         <div className="matches__container">
           <MatchList matches={datas.matches} />
         </div>

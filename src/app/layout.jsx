@@ -12,8 +12,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center justify-around p-8">
+      <body 
+      // className={inter.className}
+      >
+        <main className="flex min-h-screen flex-col items-center justify-around p-4">
           <div className="bg"></div>
           <div className="z-30 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
             <p className="fixed left-0 top-0 flex w-full justify-center border-b bg-gradient-to-b pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:p-4 lg:dark:bg-zinc-800/30">
@@ -30,7 +32,9 @@ export default function RootLayout({ children }) {
               </a>
             </div>
           </div>
-          {children}
+          <div className="container z-20">
+            {children}
+          </div>
         </main>
       </body>
     </html>

@@ -6,11 +6,15 @@ import CardMatch from "@/components/MatchCard";
 
 const MatchPage = () => {
   const params = useParams();
-  const [match, setMatch] = useState([]);
-  const [players, setPlayers] = useState([]);
+  const [match, setMatch] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api`, {
+    setLoading(true);
+    setError(null);
+
+    fetch(`http://localhost:3000/api/match/${params.id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -23,23 +27,70 @@ const MatchPage = () => {
         return res.json();
       })
       .then((data) => {
-        const match = data.matches.find((match) => match.match_id == params.id);
-        // const players = data.players.filter((player) => player.match.match_id == params.id);
-        setMatch(match);
-        setPlayers(data.players);
+        // console.log(data);
+
+        // Create the match object
+        const matchData = {
+          match_id: data[0].match_id,
+          media_video: data[0].media_video,
+          team1_name: data[0].team1_name,
+          team2_name: data[0].team2_name,
+          team1_score: data[0].team1_score,
+          team2_score: data[0].team2_score,
+          match_average: data[0].match_average,
+          players: [],
+        };
+
+        // Add players to the match object
+        for (const player of data) {
+          matchData.players.push({
+            player_id: player.player_id,
+            name: player.name,
+            media: player.media,
+            team: player.team,
+            comment_team: player.comment_team,
+            comment_player: player.comment_player,
+            player_average: player.player_average,
+            player_match_id: player.player_match_id,
+            goals: player.goals,
+            assists: player.assists,
+            shoots: player.shoots,
+            average: player.average,
+            coach_comment: player.coach_comment,
+            player_comment: player.player_comment,
+          });
+        }
+
+        // Définissez les données du match
+        setMatch(matchData);
       })
-      .catch((error) => console.error("Fetch error:", error));
+
+      .catch((error) => {
+        setError(`Fetch error: ${error.message}`);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [params.id]);
 
-  // console.log(players);
+  console.log(match);
   return (
     <>
-      <CardMatch match={match} params={params} />
+      {loading ? (
+        <h2 className="">Loading...</h2>
+      ) : error ? (
+        <h2 className="">Error: {error}</h2>
+      ) : (
+        <>
+          <h1 className="text-2xl">Match {params.id}</h1>
 
-      <div className="z-20 p-2 mb-4">
-        {/* <h1>Players in this Match</h1> */}
-        <StatsTable players={players} params={params} />
-      </div>
+          <CardMatch match={match} params={params} />
+
+          <div className="p-2 mb-4">
+            <StatsTable players={match.players} params={params} />
+          </div>
+        </>
+      )}
     </>
   );
 };

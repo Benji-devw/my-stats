@@ -3,14 +3,12 @@ import Link from "next/link";
 import CardMatch from "@/components/MatchCard";
 import "@/app/styles/cardMatch.css";
 
-// import React, { useEffect, useState } from "react";
-
 const MatchList = ({ matches }) => {
   if (!matches) {
     return <p>No matches available.</p>;
   }
+  
   // console.log(matches);
-
   return (
     <div className="matches__list">
       {matches.map((match) => (

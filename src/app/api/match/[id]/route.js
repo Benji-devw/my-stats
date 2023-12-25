@@ -21,17 +21,37 @@ export async function GET(req, res) {
     });
   }
 
-  // FIXME: Complete the SQL query to retrieve an item based on the id
   // Perform a database query to retrieve an item based on the id
-  const item = await db.get(`
-  SELECT matches.* 
-  
-  FROM matches 
-  WHERE match_id = ?`, id);
+  try {
+    const items = await db.all(
+      `
+      SELECT m.*, p.*, pm.*
+      FROM matches m
+      JOIN players_matches pm ON m.match_id = pm.match_id
+      JOIN players p ON pm.player_id = p.player_id
+      WHERE m.match_id = ?`,
+      id
+    );
 
-  // Return the items as a JSON response with status 200
-  return new Response(JSON.stringify(item), {
-    headers: { "Content-Type": "application/json" },
-    status: 200,
-  });
+    if (items) {
+      // Return the data if a match is found
+      return new Response(JSON.stringify(items), {
+        headers: { "Content-Type": "application/json" },
+        status: 200,
+      });
+    } else {
+      // Return a 404 response if no match is found
+      return new Response("Match not found", {
+        headers: { "Content-Type": "text/plain" },
+        status: 404,
+      });
+    }
+  } catch (error) {
+    // Handle database errors
+    console.error("Database error:", error);
+    return new Response("Internal Server Error", {
+      headers: { "Content-Type": "text/plain" },
+      status: 500,
+    });
+  }
 }

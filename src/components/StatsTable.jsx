@@ -2,7 +2,8 @@ import Image from "next/image";
 import React from "react";
 import "@/app/styles/statsTable.css";
 
-const StatsTable = ({ players, params }) => {
+const StatsTable = ({ players }) => {
+  console.log(players);
   return (
     <table>
       <thead>
@@ -15,28 +16,22 @@ const StatsTable = ({ players, params }) => {
         </tr>
       </thead>
       <tbody>
-        {players.map((stat, index) => (
+        {players.map((player, index) => (
           <tr key={index}>
             <td>
               <Image
-                src={stat.media}
-                alt={stat.name}
+                src={player.media}
+                alt={player.name}
                 className="player__list__image rounded-full"
                 width={100}
                 height={100}
                 priority
               />
             </td>
-            {JSON.parse(stat.matchs).map((match, id) =>
-              match.match_id == params.id && (
-                <React.Fragment key={id}>
-                  <td>{match.goals}</td>
-                  <td>{match.shoot}</td>
-                  <td>{match.pass_d}</td>
-                  <td>{match.average}/10</td>
-                </React.Fragment>
-              )
-            )}
+            <td>{player.goals}</td>
+            <td>{player.shoots}</td>
+            <td>{player.assists}</td>
+            <td>{player.average}/10</td>
           </tr>
         ))}
       </tbody>

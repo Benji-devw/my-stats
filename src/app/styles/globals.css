@@ -25,18 +25,33 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+
+    font-family:  system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+    font-size: 1.2rem;
 }
 
 main {
-  /* display: flex; */
-  /* flex-direction: column;
-  align-items: center; */
-  
   background-image: url("/slider_img03.jpg");
   background-size: cover;
   background-position: center;
   /* min-height: 100vh; */
-
+  padding: 5rem 0 2rem 0;
+}
+h1 {
+  margin: 3rem 0 1rem 0;
+}
+h3 {
+  text-transform: uppercase;
+}
+a {
+  cursor: pointer;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .bg {
@@ -53,6 +68,7 @@ main {
 }
 
 .matches__list {
+  position: relative;
   display: flex;
   flex-direction: column;
   /* gap: 1rem; */
@@ -62,6 +78,11 @@ main {
   overflow-y: scroll;
   /* overflow: hidden; */
   padding: 1rem;
+
+  &__ngtv {
+    position: absolute;
+    top: 0;
+  }
 }
 
 
@@ -69,7 +90,7 @@ main {
 .player__list {
   position: relative;
   z-index: 10;
-  padding: 2rem;
+  /* padding: 2rem; */
 }
 .player__list__image {
   width: auto;
@@ -82,6 +103,6 @@ main {
 
 @media screen and (max-width: 1024px) {
   main {
-    margin: 3rem 0 0 0;
+    /* margin: 3rem 0 0 0; */
   }
 }
