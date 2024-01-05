@@ -82,7 +82,7 @@ const MatchPage = () => {
         <h2 className="">Error: {error}</h2>
       ) : (
         <>
-          <h1 className="text-2xl">Match {params.id}</h1>
+          <h2>Match {params.id}</h2>
 
           <CardMatch match={match} params={params} />
 

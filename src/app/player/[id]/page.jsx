@@ -29,11 +29,9 @@ const PlayerPage = () => {
 
   return (
     <>
-      <div className="z-20">
-        <h1>Player Details</h1>
+        <h2>Player Details</h2>
         {/* <p>Match ID: {id}</p> */}
         {/* Display other match details */}
-      </div>
     </>
   );
 };

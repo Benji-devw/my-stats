@@ -2,6 +2,7 @@
 "use client"; // This is a client component 👈🏽
 import MatchList from "@/components/MatchList";
 import PlayerList from "@/components/PlayerList";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -27,8 +28,10 @@ export default function Home() {
   // console.log(datas);
   return (
     <>
-      <div className="home__content pt-6 z-10 flex flex-col gap-3 text-center">
-        <h1 h1 className="text-3xl">Liste des matchs</h1>
+      <div className="home__content flex flex-col gap-3 text-center">
+        <h2>Liste des matchs</h2>
+
+        <Link href={`/match/create/`} className="btn btn-primary">Ajouter un match</Link>
 
         <div className="matches__container">
           <MatchList matches={datas.matches} />
